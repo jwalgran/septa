@@ -35,9 +35,11 @@ var callSeptaApiAndParseJsonResponse = function(url, callback) {
  * @param {String} number A SEPTA bus route number.
  */
 var BusRoute = function(number) {
-    var SERVICE_URL = 'http://www3.septa.org/hackathon/BusDetours';
+    var DETOUR_URL = 'http://www3.septa.org/hackathon/BusDetours',
+        ALERT_URL = 'http://www3.septa.org/hackathon/Alerts';
     this.number = number;
-    this.detourUrl = SERVICE_URL + '/' + number;
+    this.detourUrl = DETOUR_URL + '/' + number;
+    this.alertUrl = ALERT_URL + '/' + number;
 }
 
 /**
@@ -50,6 +52,28 @@ BusRoute.prototype.getDetours = function(callback) {
     callSeptaApiAndParseJsonResponse(this.detourUrl, function(err, resp) {
         if (!err){
             callback(undefined, resp[0].route_info);
+        } else {
+            callback(err, resp);
+        }
+    });
+}
+
+/**
+ * Get the current alerts for the BusRoute.
+ *
+ * @param {function} callback The function to call when a response is received
+ * from the SEPTA alert API or an error occurs. The signature of the callback
+ * should be:
+ *
+ * function(error, response)
+ *
+ * The response parameter passed to the callback is a string containing the
+ * current alerts for the BusRoute.
+ */
+BusRoute.prototype.getAlerts = function(callback) {
+    callSeptaApiAndParseJsonResponse(this.alertUrl, function(err, resp) {
+        if (!err){
+            callback(undefined, resp[0].current_message);
         } else {
             callback(err, resp);
         }

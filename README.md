@@ -25,4 +25,10 @@ From source:
     > var septa = require('septa');
     > var bus5 = new septa.BusRoute(5);
     > bus5.getDetours(function(err, resp) {console.dir(resp);});
-    
+
+### Get current alerts for a SEPTA bus route:
+
+    $ node
+    > var septa = require('septa');
+    > var bus97 = new septa.BusRoute(97);
+    > bus97.getAlerts(function(err, resp) {console.dir(resp);});
