@@ -1,4 +1,4 @@
-# SEPTA - Get information about SEPTA trains, busses, and trolleys.
+# SEPTA - Get information about SEPTA trains, busses, and trolleys in nodejs.
 
 ## About
 
