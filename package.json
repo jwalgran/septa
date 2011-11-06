@@ -1,0 +1,25 @@
+{
+    "author": "Justin Walgran <justin@walgran.com>",
+    "name": "septa",
+    "description": "Get information about SEPTA trains, busses, and trolleys.",
+    "tags" : ["transit", "search"],
+    "version": "0.0.1",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/jwalgran/septa.git"
+    },
+    "engines": {
+        "node": ">= 0.3.6"
+    },
+    "dependencies": {
+        "request": "2.1.1"
+    },
+    "bugs" : { 
+        "url" : "http://github.com/jwalgran/septa/issues"
+    },
+    "main" : "./septa",
+    "licenses" : [{
+        "type" : "MIT",
+        "url" : "http://github.com/jwalgran/septa/raw/master/LICENSE"
+    }]
+}
