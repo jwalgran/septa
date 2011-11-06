@@ -2,7 +2,7 @@
 
 ## About
 
-This module wrapper around a collection of REST web services developed by
+This module is a wrapper around a collection of REST web services developed by
 SEPTA http://www3.septa.org/hackathon
 
 ## Installation
