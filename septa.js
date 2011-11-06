@@ -46,7 +46,32 @@ var BusRoute = function(number) {
  * Get the detours for the BusRoute.
  *
  * @param {function} callback The function to call when a response is received
- * from the SEPTA bus detour API or an error occurs.
+ * from the SEPTA bus detour API or an error occurs. The signature of the callback
+ * should be:
+ *
+ * function(error, response)
+ *
+ * The response parameter passed to the callback is an array of objects. Each
+ * object in the array has three properties: route_direction, reason, and
+ * current_message. The current_message property can contain embedded newline
+ * characters. Example:
+ * [
+ *   {
+ *     route_direction: '',
+ *     reason: '',
+ *     current_message: 'NORTHBOUND VIA 22ND  \nSTREET\nL - SNYDER\nR - 25TH\nR - WASHINGTON\nL - 22ND \nREGULAR  ROUTE'
+ *   },
+ *   {
+ *     route_direction: '',
+ *     reason: '',
+ *     current_message: 'SOUTHBOUND VIA 23RD \nSTREET\nL - WASHINGTON\nR - 21ST\nR - POINT BREEZE\nL - 23  RD\nREGULAR ROUTE'
+ *   },
+ *   {
+ *     route_direction: '',
+ *     reason: '',
+ *     current_message: '(Fri, Sat & Sun 6pm - 3am)\nSB via Pennsylvania:\nR - 21St\nReg rte'
+ *   }
+ * ]
  */
 BusRoute.prototype.getDetours = function(callback) {
     callSeptaApiAndParseJsonResponse(this.detourUrl, function(err, resp) {
