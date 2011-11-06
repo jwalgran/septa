@@ -5,6 +5,10 @@
 This module is a wrapper around a collection of REST web services developed by
 SEPTA http://www3.septa.org/hackathon
 
+## API Documentation
+
+JsDoc generated documentation is hosted at [http://jwalgran.github.com/septa]()
+
 ## Installation
 
 From npm:
