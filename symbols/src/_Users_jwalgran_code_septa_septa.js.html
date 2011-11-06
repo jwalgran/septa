@@ -1,0 +1,115 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="COMM">/**
+<span class='line'>  2</span>  * This module uses the request module as a high level API for consuming the
+<span class='line'>  3</span>  * SEPTA REST services.
+<span class='line'>  4</span>  * @private
+<span class='line'>  5</span>  */</span><span class="WHIT">
+<span class='line'>  6</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">request</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">require</span><span class="PUNC">(</span><span class="STRN">'request'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  7</span> 
+<span class='line'>  8</span> </span><span class="COMM">/**
+<span class='line'>  9</span>  * Make a request to a SEPTA REST API and parse the JSON response.
+<span class='line'> 10</span>  * @param {String} url A SEPTA REST API url.
+<span class='line'> 11</span>  * @param {Function} callback The function to call when a response is received
+<span class='line'> 12</span>  * from the SEPTA API or an error occurs.
+<span class='line'> 13</span>  * @private
+<span class='line'> 14</span>  */</span><span class="WHIT">
+<span class='line'> 15</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">callSeptaApiAndParseJsonResponse</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">url</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">callback</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 16</span> </span><span class="WHIT">    </span><span class="NAME">request</span><span class="PUNC">(</span><span class="NAME">url</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">err</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">response</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">body</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 17</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">err</span><span class="WHIT"> </span><span class="PUNC">&&</span><span class="WHIT"> </span><span class="NAME">response.statusCode</span><span class="WHIT"> </span><span class="PUNC">==</span><span class="WHIT"> </span><span class="NUMB">200</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 18</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">callback</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 19</span> </span><span class="WHIT">                </span><span class="NAME">callback</span><span class="PUNC">(</span><span class="NAME">undefined</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">JSON.parse</span><span class="PUNC">(</span><span class="NAME">body</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 20</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 21</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 22</span> </span><span class="WHIT">        </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 23</span> </span><span class="WHIT">            </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="NAME">callback</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 24</span> </span><span class="WHIT">                </span><span class="NAME">callback</span><span class="PUNC">(</span><span class="NAME">err</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="STRN">"error"</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="STRN">"statusCode"</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">response.statusCode</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="STRN">"body"</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">JSON.parse</span><span class="PUNC">(</span><span class="NAME">body</span><span class="PUNC">)</span><span class="PUNC">}</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 25</span> </span><span class="WHIT">            </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 26</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 27</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 28</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 29</span> 
+<span class='line'> 30</span> </span><span class="COMM">/**
+<span class='line'> 31</span>  * Create a new BusRoute
+<span class='line'> 32</span>  *
+<span class='line'> 33</span>  * @constructor
+<span class='line'> 34</span>  * @this {Circle}
+<span class='line'> 35</span>  * @param {String} number A SEPTA bus route number.
+<span class='line'> 36</span>  */</span><span class="WHIT">
+<span class='line'> 37</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">BusRoute</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">number</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 38</span> </span><span class="WHIT">    </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">DETOUR_URL</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'http://www3.septa.org/hackathon/BusDetours'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 39</span> </span><span class="WHIT">        </span><span class="NAME">ALERT_URL</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="STRN">'http://www3.septa.org/hackathon/Alerts'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 40</span> </span><span class="WHIT">    </span><span class="NAME">this.number</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">number</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 41</span> </span><span class="WHIT">    </span><span class="NAME">this.detourUrl</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">DETOUR_URL</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'/'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">number</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 42</span> </span><span class="WHIT">    </span><span class="NAME">this.alertUrl</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">ALERT_URL</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="STRN">'/'</span><span class="WHIT"> </span><span class="PUNC">+</span><span class="WHIT"> </span><span class="NAME">number</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 43</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 44</span> 
+<span class='line'> 45</span> </span><span class="COMM">/**
+<span class='line'> 46</span>  * Get the detours for the BusRoute.
+<span class='line'> 47</span>  *
+<span class='line'> 48</span>  * @param {function} callback The function to call when a response is received
+<span class='line'> 49</span>  * from the SEPTA bus detour API or an error occurs. The signature of the callback
+<span class='line'> 50</span>  * should be:
+<span class='line'> 51</span>  *
+<span class='line'> 52</span>  * function(error, response)
+<span class='line'> 53</span>  *
+<span class='line'> 54</span>  * The response parameter passed to the callback is an array of objects. Each
+<span class='line'> 55</span>  * object in the array has three properties: route_direction, reason, and
+<span class='line'> 56</span>  * current_message. The current_message property can contain embedded newline
+<span class='line'> 57</span>  * characters. Example:
+<span class='line'> 58</span>  * [
+<span class='line'> 59</span>  *   {
+<span class='line'> 60</span>  *     route_direction: '',
+<span class='line'> 61</span>  *     reason: '',
+<span class='line'> 62</span>  *     current_message: 'NORTHBOUND VIA 22ND  \nSTREET\nL - SNYDER\nR - 25TH\nR - WASHINGTON\nL - 22ND \nREGULAR  ROUTE'
+<span class='line'> 63</span>  *   },
+<span class='line'> 64</span>  *   {
+<span class='line'> 65</span>  *     route_direction: '',
+<span class='line'> 66</span>  *     reason: '',
+<span class='line'> 67</span>  *     current_message: 'SOUTHBOUND VIA 23RD \nSTREET\nL - WASHINGTON\nR - 21ST\nR - POINT BREEZE\nL - 23  RD\nREGULAR ROUTE'
+<span class='line'> 68</span>  *   },
+<span class='line'> 69</span>  *   {
+<span class='line'> 70</span>  *     route_direction: '',
+<span class='line'> 71</span>  *     reason: '',
+<span class='line'> 72</span>  *     current_message: '(Fri, Sat & Sun 6pm - 3am)\nSB via Pennsylvania:\nR - 21St\nReg rte'
+<span class='line'> 73</span>  *   }
+<span class='line'> 74</span>  * ]
+<span class='line'> 75</span>  */</span><span class="WHIT">
+<span class='line'> 76</span> </span><span class="NAME">BusRoute.prototype.getDetours</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">callback</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 77</span> </span><span class="WHIT">    </span><span class="NAME">callSeptaApiAndParseJsonResponse</span><span class="PUNC">(</span><span class="NAME">this.detourUrl</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">err</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">resp</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 78</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">err</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 79</span> </span><span class="WHIT">            </span><span class="NAME">callback</span><span class="PUNC">(</span><span class="NAME">undefined</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">resp</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">route_info</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 80</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 81</span> </span><span class="WHIT">            </span><span class="NAME">callback</span><span class="PUNC">(</span><span class="NAME">err</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">resp</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 82</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 83</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 84</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 85</span> 
+<span class='line'> 86</span> </span><span class="COMM">/**
+<span class='line'> 87</span>  * Get the current alerts for the BusRoute.
+<span class='line'> 88</span>  *
+<span class='line'> 89</span>  * @param {function} callback The function to call when a response is received
+<span class='line'> 90</span>  * from the SEPTA alert API or an error occurs. The signature of the callback
+<span class='line'> 91</span>  * should be:
+<span class='line'> 92</span>  *
+<span class='line'> 93</span>  * function(error, response)
+<span class='line'> 94</span>  *
+<span class='line'> 95</span>  * The response parameter passed to the callback is a string containing the
+<span class='line'> 96</span>  * current alerts for the BusRoute.
+<span class='line'> 97</span>  */</span><span class="WHIT">
+<span class='line'> 98</span> </span><span class="NAME">BusRoute.prototype.getAlerts</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">callback</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 99</span> </span><span class="WHIT">    </span><span class="NAME">callSeptaApiAndParseJsonResponse</span><span class="PUNC">(</span><span class="NAME">this.alertUrl</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">err</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">resp</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>100</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">err</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>101</span> </span><span class="WHIT">            </span><span class="NAME">callback</span><span class="PUNC">(</span><span class="NAME">undefined</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">resp</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">current_message</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>102</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT"> </span><span class="KEYW">else</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>103</span> </span><span class="WHIT">            </span><span class="NAME">callback</span><span class="PUNC">(</span><span class="NAME">err</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">resp</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>104</span> </span><span class="WHIT">        </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>105</span> </span><span class="WHIT">    </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>106</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'>107</span> 
+<span class='line'>108</span> </span><span class="NAME">exports.BusRoute</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">BusRoute</span><span class="PUNC">;</span></pre></body></html>
