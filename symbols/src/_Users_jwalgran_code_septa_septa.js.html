@@ -50,7 +50,7 @@
 <span class='line'> 43</span> </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'> 44</span> 
 <span class='line'> 45</span> </span><span class="COMM">/**
-<span class='line'> 46</span>  * Get the detours for the BusRoute.
+<span class='line'> 46</span>  * Download the current detours for the BusRoute.
 <span class='line'> 47</span>  *
 <span class='line'> 48</span>  * @param {function} callback The function to call when a response is received
 <span class='line'> 49</span>  * from the SEPTA bus detour API or an error occurs. The signature of the callback
@@ -80,7 +80,7 @@
 <span class='line'> 73</span>  *   }
 <span class='line'> 74</span>  * ]
 <span class='line'> 75</span>  */</span><span class="WHIT">
-<span class='line'> 76</span> </span><span class="NAME">BusRoute.prototype.getDetours</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">callback</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 76</span> </span><span class="NAME">BusRoute.prototype.fetchDetours</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">callback</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 77</span> </span><span class="WHIT">    </span><span class="NAME">callSeptaApiAndParseJsonResponse</span><span class="PUNC">(</span><span class="NAME">this.detourUrl</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">err</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">resp</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 78</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">err</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 79</span> </span><span class="WHIT">            </span><span class="NAME">callback</span><span class="PUNC">(</span><span class="NAME">undefined</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">resp</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">route_info</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
@@ -91,7 +91,7 @@
 <span class='line'> 84</span> </span><span class="PUNC">}</span><span class="WHIT">
 <span class='line'> 85</span> 
 <span class='line'> 86</span> </span><span class="COMM">/**
-<span class='line'> 87</span>  * Get the current alerts for the BusRoute.
+<span class='line'> 87</span>  * Download the current alerts for the BusRoute.
 <span class='line'> 88</span>  *
 <span class='line'> 89</span>  * @param {function} callback The function to call when a response is received
 <span class='line'> 90</span>  * from the SEPTA alert API or an error occurs. The signature of the callback
@@ -102,7 +102,7 @@
 <span class='line'> 95</span>  * The response parameter passed to the callback is a string containing the
 <span class='line'> 96</span>  * current alerts for the BusRoute.
 <span class='line'> 97</span>  */</span><span class="WHIT">
-<span class='line'> 98</span> </span><span class="NAME">BusRoute.prototype.getAlerts</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">callback</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 98</span> </span><span class="NAME">BusRoute.prototype.fetchAlerts</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">callback</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'> 99</span> </span><span class="WHIT">    </span><span class="NAME">callSeptaApiAndParseJsonResponse</span><span class="PUNC">(</span><span class="NAME">this.alertUrl</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">err</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">resp</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>100</span> </span><span class="WHIT">        </span><span class="KEYW">if</span><span class="WHIT"> </span><span class="PUNC">(</span><span class="PUNC">!</span><span class="NAME">err</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
 <span class='line'>101</span> </span><span class="WHIT">            </span><span class="NAME">callback</span><span class="PUNC">(</span><span class="NAME">undefined</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">resp</span><span class="PUNC">[</span><span class="NUMB">0</span><span class="PUNC">]</span><span class="PUNC">.</span><span class="NAME">current_message</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
