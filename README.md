@@ -23,16 +23,16 @@ From source:
 
 ## Usage
 
-### Get detours in effect on a SEPTA bus route:
+### Download detours in effect on a SEPTA bus route:
 
     $ node
     > var septa = require('septa');
     > var bus5 = new septa.BusRoute(5);
-    > bus5.getDetours(function(err, resp) {console.dir(resp);});
+    > bus5.fetchDetours(function(err, resp) {console.dir(resp);});
 
-### Get current alerts for a SEPTA bus route:
+### Download current alerts for a SEPTA bus route:
 
     $ node
     > var septa = require('septa');
     > var bus97 = new septa.BusRoute(97);
-    > bus97.getAlerts(function(err, resp) {console.dir(resp);});
+    > bus97.fetchAlerts(function(err, resp) {console.dir(resp);});

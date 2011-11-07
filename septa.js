@@ -43,7 +43,7 @@ var BusRoute = function(number) {
 }
 
 /**
- * Get the detours for the BusRoute.
+ * Download the current detours for the BusRoute.
  *
  * @param {function} callback The function to call when a response is received
  * from the SEPTA bus detour API or an error occurs. The signature of the callback
@@ -73,7 +73,7 @@ var BusRoute = function(number) {
  *   }
  * ]
  */
-BusRoute.prototype.getDetours = function(callback) {
+BusRoute.prototype.fetchDetours = function(callback) {
     callSeptaApiAndParseJsonResponse(this.detourUrl, function(err, resp) {
         if (!err){
             callback(undefined, resp[0].route_info);
@@ -84,7 +84,7 @@ BusRoute.prototype.getDetours = function(callback) {
 }
 
 /**
- * Get the current alerts for the BusRoute.
+ * Download the current alerts for the BusRoute.
  *
  * @param {function} callback The function to call when a response is received
  * from the SEPTA alert API or an error occurs. The signature of the callback
@@ -95,7 +95,7 @@ BusRoute.prototype.getDetours = function(callback) {
  * The response parameter passed to the callback is a string containing the
  * current alerts for the BusRoute.
  */
-BusRoute.prototype.getAlerts = function(callback) {
+BusRoute.prototype.fetchAlerts = function(callback) {
     callSeptaApiAndParseJsonResponse(this.alertUrl, function(err, resp) {
         if (!err){
             callback(undefined, resp[0].current_message);
