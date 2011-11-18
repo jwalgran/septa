@@ -76,7 +76,13 @@ var BusRoute = function(number) {
 BusRoute.prototype.fetchDetours = function(callback) {
     callSeptaApiAndParseJsonResponse(this.detourUrl, function(err, resp) {
         if (!err){
-            callback(undefined, resp[0].route_info);
+            if (resp.length > 0) {
+                callback(undefined, resp[0].route_info);
+            } else {
+                // If the SEPTA API returns an empty array I simulate the 'no detours found'
+                // response so that the calling code gets a consistant response
+                callback(undefined, [{"route_direction":"","reason":"","current_message":""}]);
+            }
         } else {
             callback(err, resp);
         }
