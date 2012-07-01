@@ -36,10 +36,12 @@ var callSeptaApiAndParseJsonResponse = function(url, callback) {
  */
 var BusRoute = function(number) {
     var DETOUR_URL = 'http://www3.septa.org/hackathon/BusDetours',
-        ALERT_URL = 'http://www3.septa.org/hackathon/Alerts';
+        ALERT_URL = 'http://www3.septa.org/hackathon/Alerts',
+        LOCATION_URL = 'http://www3.septa.org/hackathon/TransitView';
     this.number = number;
     this.detourUrl = DETOUR_URL + '/' + number;
     this.alertUrl = ALERT_URL + '/' + number;
+    this.locationUrl = LOCATION_URL + '/' + number;
 };
 
 /**
@@ -105,6 +107,28 @@ BusRoute.prototype.fetchAlerts = function(callback) {
     callSeptaApiAndParseJsonResponse(this.alertUrl, function(err, resp) {
         if (!err){
             callback(undefined, resp[0].current_message);
+        } else {
+            callback(err, resp);
+        }
+    });
+};
+
+/**
+ * Download the current locations for all the buses on a BusRoute.
+ *
+ * @param {function} callback The function to call when a response is received
+ * from the SEPTA alert API or an error occurs. The signature of the callback
+ * should be:
+ *
+ * function(error, response)
+ *
+ * The response parameter passed to the callback is a string containing the
+ * current locations for the buses on the route.
+ */
+BusRoute.prototype.fetchLocations = function(callback) {
+    callSeptaApiAndParseJsonResponse(this.locationUrl, function(err, resp) {
+        if (!err){
+            callback(undefined, resp.bus);
         } else {
             callback(err, resp);
         }
