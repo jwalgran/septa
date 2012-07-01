@@ -40,7 +40,7 @@ var BusRoute = function(number) {
     this.number = number;
     this.detourUrl = DETOUR_URL + '/' + number;
     this.alertUrl = ALERT_URL + '/' + number;
-}
+};
 
 /**
  * Download the current detours for the BusRoute.
@@ -87,7 +87,7 @@ BusRoute.prototype.fetchDetours = function(callback) {
             callback(err, resp);
         }
     });
-}
+};
 
 /**
  * Download the current alerts for the BusRoute.
@@ -109,6 +109,6 @@ BusRoute.prototype.fetchAlerts = function(callback) {
             callback(err, resp);
         }
     });
-}
+};
 
 exports.BusRoute = BusRoute;
