@@ -10,7 +10,7 @@
         "url": "git://github.com/jwalgran/septa.git"
     },
     "engines": {
-        "node": ">= 0.3.6"
+        "node": ">= 0.6.0"
     },
     "dependencies": {
         "request": "2.1.1"
