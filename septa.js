@@ -74,21 +74,28 @@ var BusRoute = function(number) {
  *     current_message: '(Fri, Sat & Sun 6pm - 3am)\nSB via Pennsylvania:\nR - 21St\nReg rte'
  *   }
  * ]
+ *
+ * If the callback is undefined then the function returns the raw Stream
+ * created by the request library.
  */
 BusRoute.prototype.fetchDetours = function(callback) {
-    callSeptaApiAndParseJsonResponse(this.detourUrl, function(err, resp) {
-        if (!err){
-            if (resp.length > 0) {
-                callback(undefined, resp[0].route_info);
+    if (callback) {
+        callSeptaApiAndParseJsonResponse(this.detourUrl, function(err, resp) {
+            if (!err){
+                if (resp.length > 0) {
+                    callback(undefined, resp[0].route_info);
+                } else {
+                    // If the SEPTA API returns an empty array I simulate the 'no detours found'
+                    // response so that the calling code gets a consistant response
+                    callback(undefined, [{"route_direction":"","reason":"","current_message":""}]);
+                }
             } else {
-                // If the SEPTA API returns an empty array I simulate the 'no detours found'
-                // response so that the calling code gets a consistant response
-                callback(undefined, [{"route_direction":"","reason":"","current_message":""}]);
+                callback(err, resp);
             }
-        } else {
-            callback(err, resp);
-        }
-    });
+        });
+    } else {
+        return request(this.detourUrl);
+    }
 };
 
 /**
@@ -102,15 +109,22 @@ BusRoute.prototype.fetchDetours = function(callback) {
  *
  * The response parameter passed to the callback is a string containing the
  * current alerts for the BusRoute.
+ *
+ * If the callback is undefined then the function returns the raw Stream
+ * created by the request library.
  */
 BusRoute.prototype.fetchAlerts = function(callback) {
-    callSeptaApiAndParseJsonResponse(this.alertUrl, function(err, resp) {
-        if (!err){
-            callback(undefined, resp[0].current_message);
-        } else {
-            callback(err, resp);
-        }
-    });
+    if (callback) {
+        callSeptaApiAndParseJsonResponse(this.alertUrl, function(err, resp) {
+            if (!err){
+                callback(undefined, resp[0].current_message);
+            } else {
+                callback(err, resp);
+            }
+        });
+    } else {
+        return request(this.alertUrl);
+    }
 };
 
 /**
@@ -124,15 +138,22 @@ BusRoute.prototype.fetchAlerts = function(callback) {
  *
  * The response parameter passed to the callback is a string containing the
  * current locations for the buses on the route.
+ *
+ * If the callback is undefined then the function returns the raw Stream
+ * created by the request library.
  */
 BusRoute.prototype.fetchLocations = function(callback) {
-    callSeptaApiAndParseJsonResponse(this.locationUrl, function(err, resp) {
-        if (!err){
-            callback(undefined, resp.bus);
-        } else {
-            callback(err, resp);
-        }
-    });
+    if (callback) {
+        callSeptaApiAndParseJsonResponse(this.locationUrl, function(err, resp) {
+            if (!err){
+                callback(undefined, resp.bus);
+            } else {
+                callback(err, resp);
+            }
+        });
+    } else {
+        return request(this.locationUrl);
+    }
 };
 
 exports.BusRoute = BusRoute;

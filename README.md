@@ -28,11 +28,43 @@ From source:
     $ node
     > var septa = require('septa');
     > var bus5 = new septa.BusRoute(5);
+
+Handle the response with a callback
+
     > bus5.fetchDetours(function(err, resp) {console.dir(resp);});
+
+Handle the raw response stream
+
+    > bus5.fetchDetours().pipe(process.stdout);
 
 ### Download current alerts for a SEPTA bus route:
 
     $ node
     > var septa = require('septa');
     > var bus97 = new septa.BusRoute(97);
+
+Handle the response with a callback
+
     > bus97.fetchAlerts(function(err, resp) {console.dir(resp);});
+
+Handle the raw response stream
+
+    > bus97.fetchAlerts().pipe(process.stdout);
+
+### Download the locations of all the buses on a SEPTA bus route:
+
+    $ node
+    > var septa = require('septa');
+    > var bus23 = new septa.BusRoute(23);
+
+Handle the response with a callback
+
+    > bus23.fetchLocations(function(err, resp) {console.dir(resp);});
+
+Handle the raw response stream
+
+    > bus23.fetchLocations().pipe(process.stdout);
+
+## What's Missing
+
+Train data
