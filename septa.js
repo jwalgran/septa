@@ -31,7 +31,7 @@ var callSeptaApiAndParseJsonResponse = function(url, callback) {
  * Create a new BusRoute
  *
  * @constructor
- * @this {Circle}
+ * @this {BusRoute}
  * @param {String} number A SEPTA bus route number.
  */
 var BusRoute = function(number) {
